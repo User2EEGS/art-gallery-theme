@@ -1,0 +1,379 @@
+{% comment %}
+  Image Gallery Section - Shopify 2.0
+  Visual gallery for showcasing work
+{% endcomment %}
+
+<div 
+  class="gallery-section section-{{ section.id }}"
+  style="
+    --gallery-bg: {{ section.settings.background_color }};
+  "
+>
+  <div class="gallery-section__container">
+    
+    {% if section.settings.heading != blank %}
+      <h2 class="gallery-section__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="gallery-section__subheading">
+        {{ section.settings.subheading }}
+      </p>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="gallery-grid gallery-grid--{{ section.settings.layout }}">
+        {% for block in section.blocks %}
+          <div class="gallery-item gallery-animate" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              <div class="gallery-item__wrapper">
+                {{- block.settings.image | image_url: width: 800 | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 1200px) 33vw, (min-width: 768px) 50vw, 100vw',
+                  widths: '400, 600, 800',
+                  class: 'gallery-item__image',
+                  alt: block.settings.image.alt | escape
+                -}}
+                
+                {% if block.settings.caption != blank %}
+                  <div class="gallery-item__overlay">
+                    <p class="gallery-item__caption">{{ block.settings.caption }}</p>
+                  </div>
+                {% endif %}
+              </div>
+            {% else %}
+              <div class="gallery-item__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+  .section-{{ section.id }} {
+    background-color: var(--gallery-bg);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .section-{{ section.id }} .gallery-section__container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .section-{{ section.id }} .gallery-section__heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-charcoal);
+  }
+
+  .section-{{ section.id }} .gallery-section__subheading {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-gray);
+    margin-bottom: var(--spacing-xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Grid Layouts */
+  .section-{{ section.id }} .gallery-grid {
+    display: grid;
+    gap: {{ section.settings.gap }}px;
+  }
+
+  .section-{{ section.id }} .gallery-grid--standard {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .section-{{ section.id }} .gallery-grid--masonry {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 200px;
+  }
+
+  @media (min-width: 768px) {
+    .section-{{ section.id }} .gallery-grid--2-columns {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .section-{{ section.id }} .gallery-grid--3-columns {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .section-{{ section.id }} .gallery-grid--4-columns {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Gallery Items */
+  .section-{{ section.id }} .gallery-item__wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ section.settings.border_radius }}px;
+    height: 100%;
+    background-color: var(--color-light-gray);
+  }
+
+  .section-{{ section.id }} .gallery-item__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.6s ease;
+    display: block;
+  }
+
+  .section-{{ section.id }} .gallery-item__wrapper:hover .gallery-item__image {
+    transform: scale(1.1);
+    filter: brightness(0.8);
+  }
+
+  /* Overlay */
+  .section-{{ section.id }} .gallery-item__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: var(--spacing-lg) var(--spacing-md);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+
+  .section-{{ section.id }} .gallery-item__wrapper:hover .gallery-item__overlay {
+    transform: translateY(0);
+  }
+
+  .section-{{ section.id }} .gallery-item__caption {
+    color: var(--color-white);
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .section-{{ section.id }} .gallery-item__placeholder {
+    aspect-ratio: 4/3;
+    background-color: var(--color-light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: {{ section.settings.border_radius }}px;
+  }
+
+  .section-{{ section.id }} .placeholder-svg {
+    width: 40%;
+    height: 40%;
+    opacity: 0.3;
+  }
+
+  /* Masonry Layout Variations */
+  .section-{{ section.id }} .gallery-grid--masonry .gallery-item:nth-child(4n+1) {
+    grid-row: span 2;
+  }
+
+  .section-{{ section.id }} .gallery-grid--masonry .gallery-item:nth-child(5n+3) {
+    grid-row: span 3;
+  }
+
+  /* Animations */
+  .gallery-animate {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .gallery-animate.animate-in {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Responsive */
+  @media (max-width: 767px) {
+    .section-{{ section.id }} .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-{{ section.id }} .gallery-grid--masonry {
+      grid-auto-rows: auto;
+    }
+
+    .section-{{ section.id }} .gallery-grid--masonry .gallery-item {
+      grid-row: auto !important;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const section = document.querySelector('.section-{{ section.id }}');
+    if (!section) return;
+
+    const items = section.querySelectorAll('.gallery-animate');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('animate-in');
+          }, index * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    items.forEach(item => observer.observe(item));
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Image Gallery",
+  "tag": "section",
+  "class": "section-gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Work"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Explore our collection of unique artworks"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "2-columns",
+          "label": "2 Columns"
+        },
+        {
+          "value": "3-columns",
+          "label": "3 Columns"
+        },
+        {
+          "value": "4-columns",
+          "label": "4 Columns"
+        },
+        {
+          "value": "masonry",
+          "label": "Masonry (varied heights)"
+        }
+      ],
+      "default": "3-columns"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Space between images",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)",
+          "info": "Appears on hover"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Gallery",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

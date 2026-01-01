@@ -1,0 +1,40 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+node_modules/
+
+# Shopify CLI files
+.shopify/
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos temporales
+*.log
+*.tmp
+*.cache
+
+# Configuración local
+.env
+.env.local
+
+# Archivos de configuración auto-generados
+config/settings_data.json
+
+## Release files
+release
+*.zip
+
+# Windows
+$RECYCLE.BIN/

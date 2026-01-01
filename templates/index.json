@@ -1,0 +1,207 @@
+{
+  "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "title": "Carmelo Cañón Art Studio",
+        "subtitle": "Descubre obras únicas que transforman espacios. Cada cuadro cuenta una historia, cada pieza es una experiencia.",
+        "button_text": "Explorar Colección",
+        "button_link": "/collections/all",
+        "section_height": "70vh",
+        "text_alignment": "center"
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Obras Destacadas",
+        "collection": "all",
+        "products_to_show": 6,
+        "show_view_all": true,
+        "columns_desktop": 3
+      }
+    },
+    "image_with_text_1": {
+      "type": "image-with-text",
+      "settings": {
+        "subheading": "Nuestra Historia",
+        "heading": "Arte que Inspira Espacios",
+        "text": "<p>Cada obra nace de una visión única y se transforma en una pieza que cuenta historias. Combinamos técnicas tradicionales con una estética contemporánea para crear arte que no solo decora, sino que transforma ambientes.</p>",
+        "button_label": "Conoce Más",
+        "button_link": "/pages/about",
+        "image_position": "left",
+        "content_alignment": "left",
+        "background_color": "#FFFFFF"
+      }
+    },
+    "features": {
+      "type": "features",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "handmade",
+            "title": "Obras Únicas",
+            "text": "Cada pieza es una creación original y única"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "quality",
+            "title": "Calidad Premium",
+            "text": "Materiales de la más alta calidad"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "shipping",
+            "title": "Envío Seguro",
+            "text": "Empaquetado profesional y envío asegurado"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
+      "settings": {
+        "heading": "Por Qué Elegirnos",
+        "columns_desktop": "3",
+        "background_color": "#FAFAF8"
+      }
+    },
+    "image_gallery": {
+      "type": "image-gallery",
+      "blocks": {
+        "gallery_1": {
+          "type": "image",
+          "settings": {
+            "caption": "Proceso Creativo"
+          }
+        },
+        "gallery_2": {
+          "type": "image",
+          "settings": {
+            "caption": "Técnica Mixta"
+          }
+        },
+        "gallery_3": {
+          "type": "image",
+          "settings": {
+            "caption": "Detalles"
+          }
+        },
+        "gallery_4": {
+          "type": "image",
+          "settings": {
+            "caption": "Acabado"
+          }
+        },
+        "gallery_5": {
+          "type": "image",
+          "settings": {
+            "caption": "Instalación"
+          }
+        },
+        "gallery_6": {
+          "type": "image",
+          "settings": {
+            "caption": "Resultado Final"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_1",
+        "gallery_2",
+        "gallery_3",
+        "gallery_4",
+        "gallery_5",
+        "gallery_6"
+      ],
+      "settings": {
+        "heading": "Nuestro Proceso",
+        "subheading": "Del concepto a la obra maestra",
+        "layout": "3-columns",
+        "gap": 20
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "La obra superó todas mis expectativas. Realmente transformó mi espacio de trabajo.",
+            "author_name": "María García",
+            "author_title": "Diseñadora de Interiores"
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Calidad excepcional y atención al detalle. Altamente recomendado para coleccionistas.",
+            "author_name": "Carlos Rodríguez",
+            "author_title": "Coleccionista de Arte"
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Hermosa artesanía. Cada pieza cuenta una historia única que enriquece nuestro hogar.",
+            "author_name": "Laura Martínez",
+            "author_title": "Propietaria"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3"
+      ],
+      "settings": {
+        "heading": "Lo Que Dicen Nuestros Clientes",
+        "subheading": "La satisfacción de nuestros clientes es nuestra mejor carta de presentación",
+        "background_color": "#FAFAF8"
+      }
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "settings": {
+        "subheading": "Compromiso con la Excelencia",
+        "heading": "Arte Accesible para Todos",
+        "text": "<p>Creemos que el arte debe ser accesible. Ofrecemos opciones de pago flexibles y envío a todo el mundo para que puedas disfrutar de obras de calidad sin importar dónde te encuentres.</p>",
+        "text_alignment": "center",
+        "button_label": "Explorar Opciones",
+        "button_link": "/collections/all"
+      }
+    },
+      "image_with_text_2": {
+      "type": "image-with-text",
+      "settings": {
+        "subheading": "Proceso Creativo",
+        "heading": "De la Inspiración a tu Hogar",
+        "text": "<p>Nuestro proceso creativo comienza con la observación y la inspiración. Cada trazo, cada color, está cuidadosamente elegido para transmitir emoción y crear una conexión con quien lo contempla.</p>",
+        "button_label": "Ver Proceso",
+        "image_position": "right",
+        "content_alignment": "left",
+        "background_color": "#FAFAF8"
+      }
+    }
+  },
+  "order": [
+    "hero_banner",
+    "featured_collection",
+    "image_with_text_1",
+    "features",
+    "image_gallery",
+    "testimonials",
+    "rich_text",
+    "image_with_text_2"
+  ]
+}

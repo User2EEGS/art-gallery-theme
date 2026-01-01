@@ -1,0 +1,272 @@
+{% comment %}
+  Hero Banner Section - Shopify 2.0 Standards Compliant
+  Fully configurable through Theme Editor
+{% endcomment %}
+
+{%- liquid
+  assign section_height = section.settings.section_height
+  assign bg_color_start = section.settings.background_color_start
+  assign bg_color_end = section.settings.background_color_end
+  assign text_color = section.settings.text_color
+  assign overlay_opacity = section.settings.overlay_opacity
+-%}
+
+<section 
+  class="hero-section hero-section--{{ section.id }}"
+  style="
+    --hero-height: {{ section_height }};
+    --hero-bg-start: {{ bg_color_start }};
+    --hero-bg-end: {{ bg_color_end }};
+    --hero-text-color: {{ text_color }};
+    --hero-overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};
+  "
+  role="banner"
+  aria-label="{{ section.settings.title | escape }}"
+>
+  {% if section.settings.background_image != blank %}
+    <div class="hero-section__background">
+      {{- section.settings.background_image | image_url: width: 2000 | image_tag:
+        loading: 'eager',
+        sizes: '100vw',
+        widths: '375, 750, 1100, 1500, 2000',
+        class: 'hero-section__image'
+      -}}
+      <div class="hero-section__overlay"></div>
+    </div>
+  {% endif %}
+
+  <div class="hero-content">
+    {% if section.settings.title != blank %}
+      <h1 class="hero-title">
+        {{ section.settings.title }}
+      </h1>
+    {% endif %}
+    
+    {% if section.settings.subtitle != blank %}
+      <p class="hero-subtitle">
+        {{ section.settings.subtitle }}
+      </p>
+    {% endif %}
+    
+    {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+      <a href="{{ section.settings.button_link }}" class="hero-cta btn btn-primary">
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .hero-section--{{ section.id }} {
+    position: relative;
+    min-height: var(--hero-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--hero-bg-start) 0%, var(--hero-bg-end) 100%);
+    padding: var(--spacing-xl) var(--spacing-md);
+    text-align: {{ section.settings.text_alignment }};
+    color: var(--hero-text-color);
+  }
+
+  {% if section.settings.background_image != blank %}
+    .hero-section--{{ section.id }} .hero-section__background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hero-section--{{ section.id }} .hero-section__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-section--{{ section.id }} .hero-section__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, var(--hero-overlay-opacity));
+    }
+  {% endif %}
+
+  .hero-section--{{ section.id }} .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: {{ section.settings.content_width }}px;
+    animation: fadeInUp 1s ease;
+  }
+
+  .hero-section--{{ section.id }} .hero-title {
+    color: var(--hero-text-color);
+  }
+
+  .hero-section--{{ section.id }} .hero-subtitle {
+    color: var(--hero-text-color);
+  }
+
+  @media (max-width: 768px) {
+    .hero-section--{{ section.id }} {
+      min-height: calc(var(--hero-height) * 0.8);
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Art Gallery"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Discover unique works that transform spaces"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "50vh",
+          "label": "Small"
+        },
+        {
+          "value": "70vh",
+          "label": "Medium"
+        },
+        {
+          "value": "90vh",
+          "label": "Large"
+        },
+        {
+          "value": "100vh",
+          "label": "Full screen"
+        }
+      ],
+      "default": "70vh"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Content width",
+      "default": 800
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "default": 30,
+      "info": "Only applies when background image is set"
+    },
+    {
+      "type": "color",
+      "id": "background_color_start",
+      "label": "Background gradient start",
+      "default": "#FAFAF8"
+    },
+    {
+      "type": "color",
+      "id": "background_color_end",
+      "label": "Background gradient end",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#2C2C2C"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "settings": {
+        "title": "Art Gallery",
+        "subtitle": "Discover unique works that transform spaces",
+        "button_text": "Explore Collection",
+        "button_link": "/collections/all"
+      }
+    }
+  ]
+}
+{% endschema %}

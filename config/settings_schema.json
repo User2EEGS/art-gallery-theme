@@ -1,0 +1,213 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Art Gallery Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Your Name",
+    "theme_documentation_url": "https://yourwebsite.com/docs",
+    "theme_support_url": "https://yourwebsite.com/support"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#2C2C2C",
+        "info": "Used for main text and accents"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary color (Gold accent)",
+        "default": "#C9A961",
+        "info": "Used for highlights and CTAs"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "default": "#FAFAF8",
+        "label": "Background color"
+      },
+      {
+        "type": "color",
+        "id": "foreground_color",
+        "default": "#2C2C2C",
+        "label": "Text color"
+      }
+    ]
+  },
+  {
+  "name": "Typography",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "font_picker",
+      "id": "type_header_font",
+      "default": "assistant_n4",
+      "label": "Heading font",
+      "info": "Used for titles and headings"
+    },
+    {
+      "type": "font_picker",
+      "id": "type_body_font",
+      "default": "assistant_n4",
+      "label": "Body font",
+      "info": "Used for body text"
+    },
+    {
+      "type": "header",
+      "content": "Font sizes"
+    },
+    {
+      "type": "range",
+      "id": "type_body_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Body font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "type_header_size",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading base size",
+      "default": 32,
+      "info": "This affects h2 headings, not the logo"
+    }
+  ]
+},
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Page width"
+      },
+      {
+        "type": "select",
+        "id": "max_page_width",
+        "label": "Maximum page width",
+        "options": [
+          {
+            "value": "1200px",
+            "label": "1200px"
+          },
+          {
+            "value": "1400px",
+            "label": "1400px"
+          },
+          {
+            "value": "1600px",
+            "label": "1600px"
+          }
+        ],
+        "default": "1400px"
+      },
+      {
+        "type": "range",
+        "id": "min_page_margin",
+        "min": 10,
+        "max": 50,
+        "step": 5,
+        "unit": "px",
+        "label": "Page margin",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "spacing_sections",
+        "min": 20,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Space between sections",
+        "default": 50
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_style",
+        "label": "Card style",
+        "options": [
+          {
+            "value": "standard",
+            "label": "Standard"
+          },
+          {
+            "value": "elevated",
+            "label": "Elevated (with shadow)"
+          }
+        ],
+        "default": "elevated"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show artist/vendor name",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_rating",
+        "label": "Show product rating",
+        "default": false,
+        "info": "Requires a product reviews app"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https://www.facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "https://www.instagram.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https://twitter.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https://www.pinterest.com/shopify"
+      }
+    ]
+  }
+]

@@ -1,0 +1,362 @@
+{% comment %}
+  Features Section - Shopify 2.0
+  Highlight key benefits and features
+{% endcomment %}
+
+<div 
+  class="features-section section-{{ section.id }}"
+  style="
+    --features-bg: {{ section.settings.background_color }};
+    --features-text: {{ section.settings.text_color }};
+  "
+>
+  <div class="features-section__container">
+    
+    {% if section.settings.heading != blank %}
+      <h2 class="features-section__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="features-grid features-grid--{{ section.settings.columns_desktop }}">
+        {% for block in section.blocks %}
+          <div class="feature-item feature-animate" {{ block.shopify_attributes }}>
+            
+            {% if block.settings.icon != blank or block.settings.icon_svg != blank %}
+              <div class="feature-icon">
+                {% if block.settings.icon_svg != blank %}
+                  {{ block.settings.icon_svg }}
+                {% elsif block.settings.icon == 'shipping' %}
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m-4 0v-1m4 0h6m-1 4a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+                  </svg>
+                {% elsif block.settings.icon == 'quality' %}
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                {% elsif block.settings.icon == 'support' %}
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                  </svg>
+                {% elsif block.settings.icon == 'secure' %}
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                {% elsif block.settings.icon == 'returns' %}
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                {% elsif block.settings.icon == 'handmade' %}
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                  </svg>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <div class="feature-content">
+              {% if block.settings.title != blank %}
+                <h3 class="feature-title">{{ block.settings.title }}</h3>
+              {% endif %}
+              
+              {% if block.settings.text != blank %}
+                <p class="feature-text">{{ block.settings.text }}</p>
+              {% endif %}
+            </div>
+
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+  .section-{{ section.id }} {
+    background-color: var(--features-bg);
+    color: var(--features-text);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .section-{{ section.id }} .features-section__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .section-{{ section.id }} .features-section__heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--features-text);
+  }
+
+  .section-{{ section.id }} .features-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .section-{{ section.id }} .features-grid--2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .section-{{ section.id }} .features-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .section-{{ section.id }} .features-grid--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .section-{{ section.id }} .feature-item {
+    text-align: center;
+    padding: var(--spacing-lg);
+    transition: transform 0.3s ease;
+  }
+
+  .section-{{ section.id }} .feature-item:hover {
+    transform: translateY(-5px);
+  }
+
+  .section-{{ section.id }} .feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold);
+    background-color: rgba(201, 169, 97, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .section-{{ section.id }} .feature-item:hover .feature-icon {
+    background-color: var(--color-gold);
+    color: var(--color-white);
+    transform: scale(1.1);
+  }
+
+  .section-{{ section.id }} .feature-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .section-{{ section.id }} .feature-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+    color: var(--features-text);
+  }
+
+  .section-{{ section.id }} .feature-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--features-text);
+    opacity: 0.8;
+  }
+
+  /* Animations */
+  .feature-animate {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .feature-animate.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  (function() {
+    const section = document.querySelector('.section-{{ section.id }}');
+    if (!section) return;
+
+    const features = section.querySelectorAll('.feature-animate');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('animate-in');
+          }, index * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    features.forEach(feature => observer.observe(feature));
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Features",
+  "tag": "section",
+  "class": "section-features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Choose Us"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Number of columns (desktop)",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FAFAF8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "shipping",
+              "label": "Free Shipping"
+            },
+            {
+              "value": "quality",
+              "label": "Quality Guarantee"
+            },
+            {
+              "value": "support",
+              "label": "Customer Support"
+            },
+            {
+              "value": "secure",
+              "label": "Secure Payment"
+            },
+            {
+              "value": "returns",
+              "label": "Easy Returns"
+            },
+            {
+              "value": "handmade",
+              "label": "Handmade"
+            }
+          ],
+          "default": "quality"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Custom SVG icon (optional)",
+          "info": "Overrides the selected icon above"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Premium Quality"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Each piece is crafted with attention to detail and quality materials."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "handmade",
+            "title": "Handcrafted Art",
+            "text": "Each piece is unique and made with passion"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "quality",
+            "title": "Premium Quality",
+            "text": "Using only the finest materials"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "shipping",
+            "title": "Worldwide Shipping",
+            "text": "We ship globally with care"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

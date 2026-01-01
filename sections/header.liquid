@@ -1,0 +1,154 @@
+{% comment %}
+  Header elegante para galería de arte
+{% endcomment %}
+
+<header class="site-header" role="banner">
+  <div class="site-header__inner">
+    
+    {%- comment -%} Logo / Nombre del estudio {%- endcomment -%}
+    <div class="site-header__logo">
+      <a href="{{ routes.root_url }}" class="site-logo">
+        {% if section.settings.logo != blank %}
+          <img 
+            src="{{ section.settings.logo | image_url: width: 200 }}" 
+            alt="{{ shop.name }}"
+            width="200"
+            height="auto"
+            loading="eager"
+          >
+        {% else %}
+          {{ section.settings.logo_text | default: shop.name }}
+        {% endif %}
+      </a>
+    </div>
+
+    {%- comment -%} Navegación principal {%- endcomment -%}
+    <nav class="site-nav" role="navigation">
+      <ul class="site-nav__list">
+        <li class="site-nav__item">
+          <a href="{{ routes.root_url }}" class="site-nav__link">
+            Inicio
+          </a>
+        </li>
+        <li class="site-nav__item">
+          <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">
+            Galería
+          </a>
+        </li>
+        <li class="site-nav__item">
+          <a href="/pages/about" class="site-nav__link">
+            Sobre el artista
+          </a>
+        </li>
+        <li class="site-nav__item">
+          <a href="/pages/contact" class="site-nav__link">
+            Contacto
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    {%- comment -%} Buscador {%- endcomment -%}
+    <div class="site-header__search">
+      <button class="search-toggle" aria-label="{{ 'search.title' | t }}">
+        <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+    </div>
+
+    {%- comment -%} Carrito {%- endcomment -%}
+    <div class="site-header__cart">
+      <a href="{{ routes.cart_url }}" class="cart-link">
+        <svg class="cart-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" data-cart-count="{{ cart.item_count }}">
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </div>
+
+    {%- comment -%} Botón menú móvil {%- endcomment -%}
+    <button class="mobile-menu-toggle" aria-label="{{ 'general.navigation.open_menu' | t }}">
+      <span class="mobile-menu-icon"></span>
+      <span class="mobile-menu-icon"></span>
+      <span class="mobile-menu-icon"></span>
+    </button>
+
+  </div>
+
+  {%- comment -%} Menú móvil {%- endcomment -%}
+  <div class="mobile-menu">
+    <div class="mobile-menu__inner">
+      <button class="mobile-menu-close" aria-label="{{ 'general.navigation.close_menu' | t }}">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <nav class="mobile-nav">
+        <ul class="mobile-nav__list">
+          <li class="mobile-nav__item">
+            <a href="{{ routes.root_url }}" class="mobile-nav__link">Inicio</a>
+          </li>
+          <li class="mobile-nav__item">
+            <a href="{{ routes.all_products_collection_url }}" class="mobile-nav__link">Galería</a>
+          </li>
+          <li class="mobile-nav__item">
+            <a href="/pages/about" class="mobile-nav__link">Sobre el artista</a>
+          </li>
+          <li class="mobile-nav__item">
+            <a href="/pages/contact" class="mobile-nav__link">Contacto</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+{%- comment -%} Búsqueda desplegable {%- endcomment -%}
+<div class="search-dropdown">
+  <div class="search-dropdown__inner">
+    <form action="{{ routes.search_url }}" method="get" class="search-form">
+      <input 
+        type="search" 
+        name="q" 
+        placeholder="{{ 'search.placeholder' | t }}"
+        class="search-input"
+        autocomplete="off"
+      >
+      <button type="submit" class="search-submit" aria-label="{{ 'search.submit' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+    </form>
+    <button class="search-close" aria-label="{{ 'search.close' | t }}">×</button>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Texto del logo (si no hay imagen)",
+      "default": "Studio by Carmelo Cañón"
+    }
+  ]
+}
+{% endschema %}
