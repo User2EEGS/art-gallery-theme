@@ -31,10 +31,27 @@
       "title": "Login"
     }
   },
-  "collections": {
+"collections": {
     "title": "Collections",
     "view_all": "View all collection",
-    "no_products": "Select a collection to show products"
+    "no_products": "No products found in this collection",
+    "product_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "filter_by": "Filter",
+    "all_products": "All products",
+    "sort_by": "Sort by",
+    "sorting": {
+      "manual": "Featured",
+      "best-selling": "Best selling",
+      "title-ascending": "A-Z",
+      "title-descending": "Z-A",
+      "price-ascending": "Price: Low to High",
+      "price-descending": "Price: High to Low",
+      "created-ascending": "Oldest first",
+      "created-descending": "Newest first"
+    }
   },
 "products": {
     "product": {
@@ -74,7 +91,7 @@
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
-  "general": {
+"general": {
     "navigation": {
       "home": "Home",
       "gallery": "Gallery",
@@ -85,6 +102,13 @@
     },
     "accessibility": {
       "skip_to_content": "Skip to content"
+    },
+    "breadcrumbs": {
+      "home": "Home"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
     }
   },
   "newsletter": {
