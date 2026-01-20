@@ -1,0 +1,400 @@
+{% comment %}
+  Authors Grid Section - Galería de autores
+  Bloques configurables con image_tag moderno
+{% endcomment %}
+
+{%- liquid
+  assign columns = section.settings.columns
+  assign bg_color = section.settings.background_color
+-%}
+
+<section 
+  class="authors-grid authors-grid--{{ section.id }}"
+  style="--authors-grid-bg: {{ bg_color }};"
+>
+  <div class="authors-grid__container">
+    
+    {%- if section.settings.heading != blank -%}
+      <h2 class="authors-grid__heading fade-in-up">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <div class="authors-grid__subheading fade-in-up">
+        {{ section.settings.subheading }}
+      </div>
+    {%- endif -%}
+
+    <div class="authors-grid__grid authors-grid__grid--{{ columns }}-cols">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign author_image = block.settings.image
+          assign author_name = block.settings.name
+          assign author_specialty = block.settings.specialty
+          assign author_bio = block.settings.bio
+          assign author_link = block.settings.link
+        -%}
+
+        <div class="authors-grid__item fade-in-up" {{ block.shopify_attributes }}>
+          <div class="authors-grid__card">
+            
+            {%- comment -%} Imagen del autor - image_tag moderno {%- endcomment -%}
+            <div class="authors-grid__image-wrapper">
+              {%- if author_image != blank -%}
+                {%- if author_link != blank -%}
+                  <a href="{{ author_link }}" class="authors-grid__image-link">
+                    {{ author_image | image_url: width: 600 | image_tag:
+                      loading: 'lazy',
+                      widths: '300, 400, 500, 600',
+                      sizes: '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw',
+                      class: 'authors-grid__image',
+                      alt: author_name
+                    }}
+                  </a>
+                {%- else -%}
+                  {{ author_image | image_url: width: 600 | image_tag:
+                    loading: 'lazy',
+                    widths: '300, 400, 500, 600',
+                    sizes: '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw',
+                    class: 'authors-grid__image',
+                    alt: author_name
+                  }}
+                {%- endif -%}
+              {%- else -%}
+                <div class="authors-grid__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+
+            {%- comment -%} Información del autor {%- endcomment -%}
+            <div class="authors-grid__content">
+              {%- if author_name != blank -%}
+                <h3 class="authors-grid__name">
+                  {%- if author_link != blank -%}
+                    <a href="{{ author_link }}">{{ author_name }}</a>
+                  {%- else -%}
+                    {{ author_name }}
+                  {%- endif -%}
+                </h3>
+              {%- endif -%}
+
+              {%- if author_specialty != blank -%}
+                <p class="authors-grid__specialty">
+                  {{ author_specialty }}
+                </p>
+              {%- endif -%}
+
+              {%- if author_bio != blank -%}
+                <div class="authors-grid__bio">
+                  {{ author_bio }}
+                </div>
+              {%- endif -%}
+            </div>
+
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .authors-grid--{{ section.id }} {
+    background-color: var(--authors-grid-bg);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__heading {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-charcoal);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__subheading {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+    color: var(--color-gray);
+  }
+
+  /* Grid */
+  .authors-grid--{{ section.id }} .authors-grid__grid {
+    display: grid;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__grid--2-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__grid--3-cols {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .authors-grid--{{ section.id }} .authors-grid__grid--2-cols {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .authors-grid--{{ section.id }} .authors-grid__grid--3-cols {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .authors-grid--{{ section.id }} .authors-grid__grid--3-cols {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Card */
+  .authors-grid--{{ section.id }} .authors-grid__card {
+    background-color: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Imagen */
+  .authors-grid--{{ section.id }} .authors-grid__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background-color: var(--color-light-gray);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__card:hover .authors-grid__image {
+    transform: scale(1.1);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-light-gray);
+  }
+
+  .authors-grid--{{ section.id }} .placeholder-svg {
+    width: 40%;
+    height: 40%;
+    opacity: 0.3;
+  }
+
+  /* Contenido */
+  .authors-grid--{{ section.id }} .authors-grid__content {
+    padding: var(--spacing-lg);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__name {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-charcoal);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__name a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__name a:hover {
+    color: var(--color-gold);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__specialty {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__bio {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-gray);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__bio p {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .authors-grid--{{ section.id }} .authors-grid__bio p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Animaciones */
+  .fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Authors Grid",
+  "tag": "section",
+  "class": "section-authors-grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Encabezado"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Nuestros Artistas"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "<p>Conoce a los talentosos creadores detrás de cada obra.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columnas",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columnas"
+        },
+        {
+          "value": "3",
+          "label": "3 columnas"
+        }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "header",
+      "content": "Colores y espaciado"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Espaciado superior",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Espaciado inferior",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "author",
+      "name": "Autor",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto del autor"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Nombre del Artista"
+        },
+        {
+          "type": "text",
+          "id": "specialty",
+          "label": "Especialidad",
+          "default": "Óleo y Acuarela"
+        },
+        {
+          "type": "richtext",
+          "id": "bio",
+          "label": "Biografía corta",
+          "default": "<p>Breve descripción del artista y su obra.</p>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace (opcional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Authors Grid",
+      "blocks": [
+        {
+          "type": "author",
+          "settings": {
+            "name": "Carmelo Cañón",
+            "specialty": "Óleo y Acuarela",
+            "bio": "<p>Artista valenciano con más de 30 años de experiencia.</p>"
+          }
+        },
+        {
+          "type": "author",
+          "settings": {
+            "name": "María González",
+            "specialty": "Acrílico",
+            "bio": "<p>Especializada en arte abstracto contemporáneo.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

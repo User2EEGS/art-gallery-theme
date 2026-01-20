@@ -31,7 +31,7 @@
       "title": "Login"
     }
   },
-"collections": {
+  "collections": {
     "title": "Collections",
     "view_all": "View all collection",
     "no_products": "No products found in this collection",
@@ -53,7 +53,7 @@
       "created-descending": "Newest first"
     }
   },
-"products": {
+  "products": {
     "product": {
       "on_sale": "Sale",
       "sold_out": "Sold out",
@@ -91,7 +91,7 @@
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
-"general": {
+  "general": {
     "navigation": {
       "home": "Home",
       "gallery": "Gallery",
@@ -100,6 +100,7 @@
       "open_menu": "Open menu",
       "close_menu": "Close menu"
     },
+    "scroll_indicator": "Scroll",
     "accessibility": {
       "skip_to_content": "Skip to content"
     },

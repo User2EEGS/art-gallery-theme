@@ -17,6 +17,10 @@
 
     {% # Estilos personalizados de galería %}
     {{ 'gallery-styles.css' | asset_url | stylesheet_tag }}
+    {{ 'gallery-improvements.css' | asset_url | stylesheet_tag }}
+    {{ 'dropdown-premium-styles.css' | asset_url | stylesheet_tag }}
+    {{ 'about-sections.css' | asset_url | stylesheet_tag }}
+
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -26,14 +30,15 @@
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
   </head>
 
-  
-
-
   <body>
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}
+
+    {% # JavaScript de animaciones %}
+    <script src="{{ 'scroll-animations.js' | asset_url }}" defer></script>
+    
   </body>
 </html>

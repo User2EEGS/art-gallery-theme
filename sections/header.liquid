@@ -1,11 +1,11 @@
 {% comment %}
-  Header elegante para galería de arte
+  Header con Dropdown Premium Shopify Style
 {% endcomment %}
 
 <header class="site-header" role="banner">
   <div class="site-header__inner">
     
-    {%- comment -%} Logo / Nombre del estudio {%- endcomment -%}
+    {%- comment -%} Logo {%- endcomment -%}
     <div class="site-header__logo">
       <a href="{{ routes.root_url }}" class="site-logo">
         {% if section.settings.logo != blank %}
@@ -22,35 +22,43 @@
       </a>
     </div>
 
-    {%- comment -%} Navegación principal {%- endcomment -%}
+    {%- comment -%} Navegación principal con submenús {%- endcomment -%}
     <nav class="site-nav" role="navigation">
       <ul class="site-nav__list">
-        <li class="site-nav__item">
-          <a href="{{ routes.root_url }}" class="site-nav__link">
-            Inicio
-          </a>
-        </li>
-        <li class="site-nav__item">
-          <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">
-            Galería
-          </a>
-        </li>
-        <li class="site-nav__item">
-          <a href="/pages/about" class="site-nav__link">
-            Sobre el artista
-          </a>
-        </li>
-        <li class="site-nav__item">
-          <a href="/pages/contact" class="site-nav__link">
-            Contacto
-          </a>
-        </li>
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li class="site-nav__item {% if link.links != blank %}has-dropdown{% endif %}">
+            <a 
+              href="{{ link.url }}" 
+              class="site-nav__link {% if link.active %}active{% endif %}"
+              {% if link.links != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}
+            >
+              {{ link.title }}
+              {%- if link.links != blank -%}
+                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              {%- endif -%}
+            </a>
+
+            {%- if link.links != blank -%}
+              <ul class="site-nav__dropdown">
+                {%- for child_link in link.links -%}
+                  <li class="site-nav__dropdown-item">
+                    <a href="{{ child_link.url }}" class="site-nav__dropdown-link {% if child_link.active %}active{% endif %}">
+                      {{ child_link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
       </ul>
     </nav>
 
     {%- comment -%} Buscador {%- endcomment -%}
     <div class="site-header__search">
-      <button class="search-toggle" aria-label="{{ 'search.title' | t }}">
+      <button class="search-toggle" aria-label="Buscar">
         <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.35-4.35"></path>
@@ -73,43 +81,55 @@
     </div>
 
     {%- comment -%} Botón menú móvil {%- endcomment -%}
-    <button class="mobile-menu-toggle" aria-label="{{ 'general.navigation.open_menu' | t }}">
+    <button class="mobile-menu-toggle" aria-label="Abrir menú">
       <span class="mobile-menu-icon"></span>
       <span class="mobile-menu-icon"></span>
       <span class="mobile-menu-icon"></span>
     </button>
 
   </div>
-
-  {%- comment -%} Menú móvil {%- endcomment -%}
-  <div class="mobile-menu">
-    <div class="mobile-menu__inner">
-      <button class="mobile-menu-close" aria-label="{{ 'general.navigation.close_menu' | t }}">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-      <nav class="mobile-nav">
-        <ul class="mobile-nav__list">
-          <li class="mobile-nav__item">
-            <a href="{{ routes.root_url }}" class="mobile-nav__link">Inicio</a>
-          </li>
-          <li class="mobile-nav__item">
-            <a href="{{ routes.all_products_collection_url }}" class="mobile-nav__link">Galería</a>
-          </li>
-          <li class="mobile-nav__item">
-            <a href="/pages/about" class="mobile-nav__link">Sobre el artista</a>
-          </li>
-          <li class="mobile-nav__item">
-            <a href="/pages/contact" class="mobile-nav__link">Contacto</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
 </header>
 
+{%- comment -%} Overlay con blur (efecto premium) {%- endcomment -%}
+<div class="dropdown-overlay"></div>
+
+{%- comment -%} Menú móvil {%- endcomment -%}
+<div class="mobile-menu">
+  <div class="mobile-menu__inner">
+    <button class="mobile-menu-close" aria-label="Cerrar menú">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <nav class="mobile-nav">
+      <ul class="mobile-nav__list">
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li class="mobile-nav__item {% if link.links != blank %}has-submenu{% endif %}">
+            <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+            
+            {%- if link.links != blank -%}
+              <button class="mobile-submenu-toggle" aria-label="Expandir {{ link.title }}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <ul class="mobile-nav__submenu">
+                {%- for child_link in link.links -%}
+                  <li class="mobile-nav__submenu-item">
+                    <a href="{{ child_link.url }}" class="mobile-nav__submenu-link">
+                      {{ child_link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</div>
 
 {%- comment -%} Búsqueda desplegable {%- endcomment -%}
 <div class="search-dropdown">
@@ -118,21 +138,37 @@
       <input 
         type="search" 
         name="q" 
-        placeholder="{{ 'search.placeholder' | t }}"
+        placeholder="Buscar en la galería..."
         class="search-input"
         autocomplete="off"
       >
-      <button type="submit" class="search-submit" aria-label="{{ 'search.submit' | t }}">
+      <button type="submit" class="search-submit" aria-label="Enviar">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.35-4.35"></path>
         </svg>
       </button>
     </form>
-    <button class="search-close" aria-label="{{ 'search.close' | t }}">×</button>
+    <button class="search-close" aria-label="Cerrar">×</button>
   </div>
 </div>
 
+{%- comment -%} JavaScript para submenús móviles {%- endcomment -%}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const submenuToggles = document.querySelectorAll('.mobile-submenu-toggle');
+    
+    submenuToggles.forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const parentItem = this.closest('.mobile-nav__item');
+        parentItem.classList.toggle('open');
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -141,14 +177,22 @@
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo"
+      "label": "Imagen del logo"
     },
     {
       "type": "text",
       "id": "logo_text",
       "label": "Texto del logo (si no hay imagen)",
       "default": "Studio by Carmelo Cañón"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú de navegación",
+      "default": "main-menu",
+      "info": "Edita el menú en: Tienda en línea → Navegación"
     }
   ]
 }
 {% endschema %}
+

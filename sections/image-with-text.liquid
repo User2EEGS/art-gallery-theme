@@ -1,477 +1,326 @@
 {% comment %}
-  Image with Text Section - Shopify 2.0
-  Versatile section for storytelling and content
+  Image with Text Section - Shopify OS 2.0
+  Versión corregida con sintaxis compatible
 {% endcomment %}
 
 {%- liquid
-  assign section_id = section.id
-  assign image = section.settings.image
+  assign subheading = section.settings.subheading
+  assign heading = section.settings.heading
+  assign text = section.settings.text
+  assign button_label = section.settings.button_label
+  assign button_link = section.settings.button_link
+  assign section_image = section.settings.main_image
   assign image_position = section.settings.image_position
   assign content_alignment = section.settings.content_alignment
-  assign image_width = section.settings.image_width
+  assign bg_color = section.settings.background_color
 -%}
 
-<div 
-  class="image-with-text section-{{ section_id }}"
-  style="
-    --section-bg: {{ section.settings.background_color }};
-    --section-text-color: {{ section.settings.text_color }};
-  "
+<section 
+  class="image-with-text image-with-text--{{ section.id }}"
+  style="background-color: {{ bg_color }};"
 >
   <div class="image-with-text__container">
-    
     <div class="image-with-text__grid image-with-text__grid--{{ image_position }}">
       
-      {%- comment -%} Image Column {%- endcomment -%}
+      {%- comment -%} Bloque de Imagen {%- endcomment -%}
       <div class="image-with-text__media">
-        {% if image != blank %}
-          <div class="image-with-text__media-wrapper image-animate">
-            {{- image | image_url: width: 1200 | image_tag:
-              loading: 'lazy',
-              sizes: '(min-width: 1200px) 50vw, (min-width: 768px) 50vw, 100vw',
-              widths: '400, 600, 800, 1000, 1200',
-              class: 'image-with-text__image',
-              alt: image.alt | escape
-            -}}
-          </div>
-        {% else %}
+        {%- if section_image != blank -%}
+          <img
+            src="{{ section_image | image_url: width: 1500 }}"
+            srcset="{{ section_image | image_url: width: 600 }} 600w,
+                    {{ section_image | image_url: width: 800 }} 800w,
+                    {{ section_image | image_url: width: 1000 }} 1000w,
+                    {{ section_image | image_url: width: 1200 }} 1200w,
+                    {{ section_image | image_url: width: 1500 }} 1500w"
+            sizes="(min-width: 768px) 50vw, 100vw"
+            alt="{{ section_image.alt | escape }}"
+            class="image-with-text__image"
+            loading="lazy"
+            width="1500"
+            height="1875"
+          >
+        {%- else -%}
           <div class="image-with-text__placeholder">
             {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
           </div>
-        {% endif %}
+        {%- endif -%}
       </div>
 
-      {%- comment -%} Content Column {%- endcomment -%}
-      <div class="image-with-text__content content-animate">
-        <div class="image-with-text__content-wrapper image-with-text__content--{{ content_alignment }}">
-          
-          {% if section.settings.subheading != blank %}
-            <p class="image-with-text__subheading">
-              {{ section.settings.subheading }}
-            </p>
-          {% endif %}
+      {%- comment -%} Bloque de Contenido {%- endcomment -%}
+      <div class="image-with-text__content image-with-text__content--{{ content_alignment }}">
+        {%- if subheading != blank -%}
+          <p class="image-with-text__subheading">{{ subheading }}</p>
+        {%- endif -%}
 
-          {% if section.settings.heading != blank %}
-            <h2 class="image-with-text__heading">
-              {{ section.settings.heading }}
-            </h2>
-          {% endif %}
+        {%- if heading != blank -%}
+          <h2 class="image-with-text__heading">{{ heading }}</h2>
+        {%- endif -%}
 
-          {% if section.settings.text != blank %}
-            <div class="image-with-text__text">
-              {{ section.settings.text }}
-            </div>
-          {% endif %}
+        {%- if text != blank -%}
+          <div class="image-with-text__text">{{ text }}</div>
+        {%- endif -%}
 
-          {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-            <div class="image-with-text__button">
-              <a 
-                href="{{ section.settings.button_link }}" 
-                class="btn {% if section.settings.button_style == 'primary' %}btn-primary{% else %}btn-secondary{% endif %}"
-              >
-                {{ section.settings.button_label }}
-              </a>
-            </div>
-          {% endif %}
-
-        </div>
+        {%- if button_label != blank and button_link != blank -%}
+          <div class="image-with-text__button">
+            <a href="{{ button_link }}" class="btn btn-secondary">
+              {{ button_label }}
+            </a>
+          </div>
+        {%- endif -%}
       </div>
 
     </div>
   </div>
-</div>
+</section>
 
 <style>
-  .section-{{ section_id }} {
-    background-color: var(--section-bg);
-    color: var(--section-text-color);
+  /* Layout Base */
+  .image-with-text--{{ section.id }} {
+    position: relative;
+    overflow: hidden;
     padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
   }
 
-  .section-{{ section_id }} .image-with-text__container {
-    max-width: {{ section.settings.container_width }}px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
+  /* Patrón decorativo */
+  .image-with-text--{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -10%;
+    width: 40%;
+    height: 80%;
+    background: radial-gradient(
+      circle,
+      rgba(201, 169, 97, 0.07) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .section-{{ section_id }} .image-with-text__grid {
+  .image-with-text--{{ section.id }} .image-with-text__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md, 20px);
+    position: relative;
+    z-index: 2;
+  }
+
+  .image-with-text--{{ section.id }} .image-with-text__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-xl);
+    gap: 2rem;
     align-items: center;
   }
 
   @media (min-width: 768px) {
-    .section-{{ section_id }} .image-with-text__grid {
-      grid-template-columns: {% if image_width == 'narrow' %}40% 60%{% elsif image_width == 'wide' %}60% 40%{% else %}1fr 1fr{% endif %};
-      gap: var(--spacing-xl);
+    .image-with-text--{{ section.id }} .image-with-text__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5rem;
     }
-
-    .section-{{ section_id }} .image-with-text__grid--right {
-      grid-template-columns: {% if image_width == 'narrow' %}60% 40%{% elsif image_width == 'wide' %}40% 60%{% else %}1fr 1fr{% endif %};
+    .image-with-text--{{ section.id }} .image-with-text__grid--right .image-with-text__media { 
+      order: 2; 
     }
-
-    .section-{{ section_id }} .image-with-text__grid--right .image-with-text__media {
-      order: 2;
+    .image-with-text--{{ section.id }} .image-with-text__grid--right .image-with-text__content { 
+      order: 1; 
     }
   }
 
-  /* Image */
-  .section-{{ section_id }} .image-with-text__media-wrapper {
+  /* Estilos de Imagen - CORREGIDO */
+  .image-with-text--{{ section.id }} .image-with-text__media {
     position: relative;
-    overflow: hidden;
-    border-radius: {{ section.settings.image_border_radius }}px;
-    box-shadow: {{ section.settings.image_shadow }};
-  }
-
-  .section-{{ section_id }} .image-with-text__image {
     width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.6s ease;
+    min-height: 400px; /* Altura mínima garantizada */
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    background-color: #f5f5f5; /* Fondo visible para debug */
   }
 
-  .section-{{ section_id }} .image-with-text__media-wrapper:hover .image-with-text__image {
+  /* Aspect ratio con fallback para navegadores antiguos */
+  @supports (aspect-ratio: 4 / 5) {
+    .image-with-text--{{ section.id }} .image-with-text__media {
+      aspect-ratio: 4 / 5;
+      min-height: auto;
+    }
+  }
+
+  .image-with-text--{{ section.id }} .image-with-text__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .image-with-text--{{ section.id }} .image-with-text__media:hover .image-with-text__image {
     transform: scale(1.05);
   }
 
-  .section-{{ section_id }} .image-with-text__placeholder {
-    aspect-ratio: 4/3;
-    background-color: var(--color-light-gray);
+  .image-with-text--{{ section.id }} .image-with-text__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: {{ section.settings.image_border_radius }}px;
+    background-color: #f0f0f0;
   }
 
-  .section-{{ section_id }} .placeholder-svg {
-    width: 40%;
-    height: 40%;
+  .image-with-text--{{ section.id }} .placeholder-svg {
+    width: 80px;
+    height: 80px;
     opacity: 0.3;
   }
 
-  /* Content */
-  .section-{{ section_id }} .image-with-text__content-wrapper {
-    max-width: 600px;
+  /* Tipografía y Textos */
+  .image-with-text--{{ section.id }} .image-with-text__subheading {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #C9A961;
+    margin-bottom: 1rem;
   }
 
-  .section-{{ section_id }} .image-with-text__content--left {
-    margin-right: auto;
-    text-align: left;
+  .image-with-text--{{ section.id }} .image-with-text__heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #2C2C2C;
   }
 
-  .section-{{ section_id }} .image-with-text__content--center {
-    margin: 0 auto;
+  .image-with-text--{{ section.id }} .image-with-text__text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #4A4A4A;
+    margin-bottom: 2rem;
+  }
+
+  .image-with-text--{{ section.id }} .image-with-text__content--center {
     text-align: center;
   }
 
-  .section-{{ section_id }} .image-with-text__content--right {
-    margin-left: auto;
-    text-align: right;
-  }
-
-  .section-{{ section_id }} .image-with-text__subheading {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-gold);
-    margin-bottom: var(--spacing-sm);
-    font-weight: 500;
-  }
-
-  .section-{{ section_id }} .image-with-text__heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .section-{{ section_id }} .image-with-text__text {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    margin-bottom: var(--spacing-lg);
-    color: var(--section-text-color);
-    opacity: 0.9;
-  }
-
-  .section-{{ section_id }} .image-with-text__text p {
-    margin-bottom: var(--spacing-md);
-  }
-
-  .section-{{ section_id }} .image-with-text__button {
-    margin-top: var(--spacing-lg);
-  }
-
-  /* Animations */
-  .image-animate,
-  .content-animate {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .image-animate.animate-in,
-  .content-animate.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .content-animate {
-    transition-delay: 0.2s;
-  }
-
-  /* Responsive */
   @media (max-width: 767px) {
-    .section-{{ section_id }} .image-with-text__content--right,
-    .section-{{ section_id }} .image-with-text__content--center {
-      text-align: left;
-      margin: 0;
+    .image-with-text--{{ section.id }} {
+      padding: {{ section.settings.padding_top | divided_by: 1.5 }}px 20px {{ section.settings.padding_bottom | divided_by: 1.5 }}px;
+    }
+    
+    .image-with-text--{{ section.id }} .image-with-text__media {
+      min-height: 350px;
     }
   }
 </style>
-
-<script>
-  // Intersection Observer for scroll animations
-  (function() {
-    const section = document.querySelector('.section-{{ section_id }}');
-    if (!section) return;
-
-    const animatedElements = section.querySelectorAll('.image-animate, .content-animate');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    animatedElements.forEach(el => observer.observe(el));
-  })();
-</script>
 
 {% schema %}
 {
   "name": "Image with Text",
   "tag": "section",
-  "class": "section-image-text",
+  "class": "section-image-with-text",
   "settings": [
     {
       "type": "header",
-      "content": "Image"
+      "content": "Imagen"
     },
     {
       "type": "image_picker",
-      "id": "image",
-      "label": "Image"
+      "id": "main_image",
+      "label": "Imagen"
     },
     {
       "type": "select",
       "id": "image_position",
-      "label": "Image position",
+      "label": "Posición de la imagen",
       "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
       ],
       "default": "left"
     },
     {
-      "type": "select",
-      "id": "image_width",
-      "label": "Image width",
-      "options": [
-        {
-          "value": "narrow",
-          "label": "Narrow (40%)"
-        },
-        {
-          "value": "standard",
-          "label": "Standard (50%)"
-        },
-        {
-          "value": "wide",
-          "label": "Wide (60%)"
-        }
-      ],
-      "default": "standard"
-    },
-    {
-      "type": "range",
-      "id": "image_border_radius",
-      "min": 0,
-      "max": 20,
-      "step": 2,
-      "unit": "px",
-      "label": "Image border radius",
-      "default": 0
-    },
-    {
-      "type": "select",
-      "id": "image_shadow",
-      "label": "Image shadow",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "0 4px 20px rgba(0,0,0,0.1)",
-          "label": "Light"
-        },
-        {
-          "value": "0 8px 30px rgba(0,0,0,0.15)",
-          "label": "Medium"
-        },
-        {
-          "value": "0 12px 40px rgba(0,0,0,0.2)",
-          "label": "Strong"
-        }
-      ],
-      "default": "0 4px 20px rgba(0,0,0,0.1)"
-    },
-    {
       "type": "header",
-      "content": "Content"
+      "content": "Contenido"
     },
     {
       "type": "text",
       "id": "subheading",
-      "label": "Subheading",
-      "default": "Our Story"
+      "label": "Subtítulo"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "Crafting Art with Passion"
+      "label": "Título",
+      "default": "Nuestra Galería"
     },
     {
       "type": "richtext",
       "id": "text",
-      "label": "Text",
-      "default": "<p>Every piece tells a story. We combine traditional techniques with modern vision to create artworks that transform spaces and inspire emotion.</p>"
+      "label": "Texto",
+      "default": "<p>Comparte la historia detrás de tus obras de arte.</p>"
     },
     {
       "type": "select",
       "id": "content_alignment",
-      "label": "Content alignment",
+      "label": "Alineación",
       "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" }
       ],
       "default": "left"
     },
     {
       "type": "header",
-      "content": "Button"
+      "content": "Botón (opcional)"
     },
     {
       "type": "text",
       "id": "button_label",
-      "label": "Button label",
-      "default": "Learn More"
+      "label": "Etiqueta botón"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link"
-    },
-    {
-      "type": "select",
-      "id": "button_style",
-      "label": "Button style",
-      "options": [
-        {
-          "value": "primary",
-          "label": "Primary"
-        },
-        {
-          "value": "secondary",
-          "label": "Secondary"
-        }
-      ],
-      "default": "primary"
+      "label": "Enlace botón"
     },
     {
       "type": "header",
-      "content": "Colors"
+      "content": "Colores y espaciado"
     },
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background color",
+      "label": "Fondo",
       "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color",
-      "default": "#2C2C2C"
-    },
-    {
-      "type": "header",
-      "content": "Section spacing"
     },
     {
       "type": "range",
       "id": "padding_top",
       "min": 0,
       "max": 120,
-      "step": 10,
+      "step": 4,
       "unit": "px",
-      "label": "Top padding",
-      "default": 80
+      "label": "Padding Superior",
+      "default": 60
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
       "max": 120,
-      "step": 10,
+      "step": 4,
       "unit": "px",
-      "label": "Bottom padding",
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "container_width",
-      "min": 1000,
-      "max": 1600,
-      "step": 100,
-      "unit": "px",
-      "label": "Container width",
-      "default": 1400
+      "label": "Padding Inferior",
+      "default": 60
     }
   ],
   "presets": [
     {
-      "name": "Image with Text",
-      "settings": {
-        "subheading": "Our Story",
-        "heading": "Crafting Art with Passion",
-        "text": "<p>Every piece tells a story. We combine traditional techniques with modern vision to create artworks that transform spaces and inspire emotion.</p>",
-        "button_label": "Learn More"
-      }
+      "name": "Image with Text"
     }
   ]
 }

@@ -3,210 +3,91 @@
     "name": "theme_info",
     "theme_name": "Art Gallery Theme",
     "theme_version": "1.0.0",
-    "theme_author": "Your Name",
-    "theme_documentation_url": "https://yourwebsite.com/docs",
-    "theme_support_url": "https://yourwebsite.com/support"
+    "theme_author": "Carmelo Cañón",
+    "theme_documentation_url": "https://carmelo-canon-art-studio.myshopify.com",
+    "theme_support_url": "https://carmelo-canon-art-studio.myshopify.com/pages/contact"
   },
   {
-    "name": "Colors",
+    "name": "Colores de marca",
     "settings": [
       {
         "type": "header",
-        "content": "Brand colors"
+        "content": "Colores principales"
       },
       {
         "type": "color",
         "id": "color_primary",
-        "label": "Primary color",
-        "default": "#2C2C2C",
-        "info": "Used for main text and accents"
+        "label": "Color principal",
+        "default": "#2C2C2C"
       },
       {
         "type": "color",
-        "id": "color_secondary",
-        "label": "Secondary color (Gold accent)",
-        "default": "#C9A961",
-        "info": "Used for highlights and CTAs"
+        "id": "color_accent",
+        "label": "Color de acento (dorado)",
+        "default": "#C9A961"
       },
       {
         "type": "color",
-        "id": "background_color",
-        "default": "#FAFAF8",
-        "label": "Background color"
-      },
-      {
-        "type": "color",
-        "id": "foreground_color",
-        "default": "#2C2C2C",
-        "label": "Text color"
-      }
-    ]
-  },
-  {
-  "name": "Typography",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Fonts"
-    },
-    {
-      "type": "font_picker",
-      "id": "type_header_font",
-      "default": "assistant_n4",
-      "label": "Heading font",
-      "info": "Used for titles and headings"
-    },
-    {
-      "type": "font_picker",
-      "id": "type_body_font",
-      "default": "assistant_n4",
-      "label": "Body font",
-      "info": "Used for body text"
-    },
-    {
-      "type": "header",
-      "content": "Font sizes"
-    },
-    {
-      "type": "range",
-      "id": "type_body_size",
-      "min": 12,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Body font size",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "type_header_size",
-      "min": 20,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "label": "Heading base size",
-      "default": 32,
-      "info": "This affects h2 headings, not the logo"
-    }
-  ]
-},
-  {
-    "name": "Layout",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Page width"
-      },
-      {
-        "type": "select",
-        "id": "max_page_width",
-        "label": "Maximum page width",
-        "options": [
-          {
-            "value": "1200px",
-            "label": "1200px"
-          },
-          {
-            "value": "1400px",
-            "label": "1400px"
-          },
-          {
-            "value": "1600px",
-            "label": "1600px"
-          }
-        ],
-        "default": "1400px"
-      },
-      {
-        "type": "range",
-        "id": "min_page_margin",
-        "min": 10,
-        "max": 50,
-        "step": 5,
-        "unit": "px",
-        "label": "Page margin",
-        "default": 20
+        "id": "color_text",
+        "label": "Color de texto",
+        "default": "#6B6B6B"
       },
       {
         "type": "header",
-        "content": "Spacing"
+        "content": "Gradientes de fondo"
+      },
+      {
+        "type": "color",
+        "id": "gradient_start",
+        "label": "Color inicial del gradiente",
+        "default": "#FAFAF8"
+      },
+      {
+        "type": "color",
+        "id": "gradient_end",
+        "label": "Color final del gradiente",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Configuración del Header"
+      },
+      {
+        "type": "color",
+        "id": "header_bg_start",
+        "label": "Fondo del header - inicio",
+        "default": "#FAFAF8"
+      },
+      {
+        "type": "color",
+        "id": "header_bg_end",
+        "label": "Fondo del header - final",
+        "default": "#FFFFFF"
       },
       {
         "type": "range",
-        "id": "spacing_sections",
-        "min": 20,
+        "id": "header_transparency",
+        "min": 85,
         "max": 100,
-        "step": 5,
+        "step": 1,
+        "unit": "%",
+        "label": "Opacidad del header",
+        "default": 98
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "range",
+        "id": "base_font_size",
+        "min": 14,
+        "max": 18,
+        "step": 1,
         "unit": "px",
-        "label": "Space between sections",
-        "default": 50
-      }
-    ]
-  },
-  {
-    "name": "Product cards",
-    "settings": [
-      {
-        "type": "select",
-        "id": "card_style",
-        "label": "Card style",
-        "options": [
-          {
-            "value": "standard",
-            "label": "Standard"
-          },
-          {
-            "value": "elevated",
-            "label": "Elevated (with shadow)"
-          }
-        ],
-        "default": "elevated"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_vendor",
-        "label": "Show artist/vendor name",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "show_rating",
-        "label": "Show product rating",
-        "default": false,
-        "info": "Requires a product reviews app"
-      }
-    ]
-  },
-  {
-    "name": "Social media",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Social accounts"
-      },
-      {
-        "type": "text",
-        "id": "social_facebook_link",
-        "label": "Facebook",
-        "info": "https://www.facebook.com/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_instagram_link",
-        "label": "Instagram",
-        "info": "https://www.instagram.com/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_twitter_link",
-        "label": "Twitter",
-        "info": "https://twitter.com/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_pinterest_link",
-        "label": "Pinterest",
-        "info": "https://www.pinterest.com/shopify"
+        "label": "Tamaño base del texto",
+        "default": 15
       }
     ]
   }

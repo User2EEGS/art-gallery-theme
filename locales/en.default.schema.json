@@ -1,53 +1,68 @@
 {
   "general": {
-    "404": "Not found",
+    "group": "Group",
+    "text": "Text",
+    "404": "404 page",
     "article": "Article",
-    "block": "Block",
     "blog": "Blog",
     "cart": "Cart",
     "collection": "Collection",
-    "collections": "Collections",
-    "collection_card": "Collection card",
     "collections_grid": "Collections grid",
-    "colors": "Colors",
-    "column": "Column",
-    "content": "Content",
     "custom_section": "Custom section",
-    "fonts": "Fonts",
-    "footer": "Footer",
-    "group": "Group",
-    "header": "Header",
-    "layout": "Layout",
-    "main": "Main",
     "page": "Page",
-    "password": "Password",
-    "primary": "Primary",
+    "password": "Password page",
     "product": "Product",
-    "row": "Row",
     "search": "Search",
-    "secondary": "Secondary",
-    "section": "Section",
-    "settings": "Settings",
-    "sidebar": "Sidebar",
-    "text": "Text",
-    "theme": "Theme",
-    "typography": "Typography"
+    "scroll_indicator": "Scroll"
   },
   "labels": {
     "alignment": "Alignment",
     "background": "Background",
     "foreground": "Foreground",
-    "grid_gap": "Grid spacing",
+    "grid_gap": "Grid gap",
     "grid_item_width": "Grid item width",
-    "input_corner_radius": "Input corner radius",
+    "input_corner_radius": "Corner radius",
     "layout_direction": "Layout direction",
     "menu": "Menu",
     "padding": "Padding",
+    "accent": "Accent",
+    "button": "Button",
+    "button_label": "Button label",
+    "card": "Card",
+    "collection": "Collection",
+    "content": "Content",
+    "desktop": "Desktop",
+    "header": "Header",
+    "heading": "Heading",
+    "height": "Height",
+    "image": "Image",
+    "layout": "Layout",
+    "link": "Link",
+    "mobile": "Mobile",
+    "overlay": "Overlay",
+    "position": "Position",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "section": "Section",
+    "settings": "Settings",
+    "show": "Show",
+    "size": "Size",
+    "spacing": "Spacing",
+    "style": "Style",
+    "text": "Text",
+    "text_alignment": "Text alignment",
+    "text_color": "Text color",
+    "text_style": "Text style",
+    "title": "Title",
+    "width": "Width",
+    "color": "Color",
+    "colors": "Colors",
+    "scheme": "Color scheme",
+    "enable": "Enable",
+    "disable": "Disable",
     "page_margin": "Page margin",
     "page_width": "Page width",
-    "show_payment_icons": "Show payment icons",
-    "text_style": "Text style",
-    "text": "Text"
+    "show_payment_icons": "Show payment icons"
   },
   "options": {
     "alignment": {
@@ -64,13 +79,62 @@
       "wide": "Wide"
     },
     "size": {
-      "large": "Large",
-      "small": "Small"
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
     },
     "text_style": {
       "title": "Title",
       "subtitle": "Subtitle",
-      "normal": "Normal text"
+      "normal": "Normal"
+    }
+  },
+  "settings": {
+    "colors": {
+      "name": "Colors",
+      "primary": "Primary color",
+      "secondary": "Secondary color",
+      "accent": "Accent color",
+      "background": "Background",
+      "text": "Text"
     },
+    "typography": {
+      "name": "Typography",
+      "heading_font": "Heading font",
+      "body_font": "Body font"
+    },
+    "layout": {
+      "name": "Layout",
+      "page_width": "Page width",
+      "spacing": "Spacing"
+    }
+  },
+  "sections": {
+    "header": {
+      "name": "Header"
+    },
+    "footer": {
+      "name": "Footer"
+    },
+    "all": {
+      "padding": {
+        "section_padding": "Section padding",
+        "top": "Top",
+        "bottom": "Bottom"
+      },
+      "colors": {
+        "label": "Colors",
+        "background": "Background",
+        "text": "Text"
+      }
+    }
+  },
+  "blocks": {
+    "group": {
+      "name": "Group"
+    },
+    "text": {
+      "name": "Text"
+    }
   }
 }

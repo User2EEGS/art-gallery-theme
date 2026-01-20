@@ -92,15 +92,30 @@
           {{ 'collections.sort_by' | t }}:
         </label>
         <select id="sort-{{ section.id }}" class="sort-select" onchange="location.href=this.value">
-          {% assign sort_options = 'manual,best-selling,title-ascending,title-descending,price-ascending,price-descending,created-ascending,created-descending' | split: ',' %}
-          {% for option in sort_options %}
-            <option 
-              value="{{ collection.url }}?sort_by={{ option }}"
-              {% if sort_by == option %}selected{% endif %}
-            >
-              {{ 'collections.sorting.' | append: option | t }}
-            </option>
-          {% endfor %}
+        <option value="{{ collection.url }}?sort_by=manual" {% if sort_by == 'manual' %}selected{% endif %}>
+            {{ 'collections.sorting.manual' | t }}
+        </option>
+        <option value="{{ collection.url }}?sort_by=best-selling" {% if sort_by == 'best-selling' %}selected{% endif %}>
+            {{ 'collections.sorting.best-selling' | t }}
+        </option>
+        <option value="{{ collection.url }}?sort_by=title-ascending" {% if sort_by == 'title-ascending' %}selected{% endif %}>
+            {{ 'collections.sorting.title-ascending' | t }}
+        </option>
+        <option value="{{ collection.url }}?sort_by=title-descending" {% if sort_by == 'title-descending' %}selected{% endif %}>
+            {{ 'collections.sorting.title-descending' | t }}
+        </option>
+        <option value="{{ collection.url }}?sort_by=price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>
+            {{ 'collections.sorting.price-ascending' | t }}
+        </option>
+        <option value="{{ collection.url }}?sort_by=price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>
+            {{ 'collections.sorting.price-descending' | t }}
+        </option>
+        <option value="{{ collection.url }}?sort_by=created-ascending" {% if sort_by == 'created-ascending' %}selected{% endif %}>
+            {{ 'collections.sorting.created-ascending' | t }}
+        </option>
+        <option value="{{ collection.url }}?sort_by=created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>
+            {{ 'collections.sorting.created-descending' | t }}
+        </option>   
         </select>
       </div>
     {% endif %}

@@ -1,10 +1,9 @@
 {% comment %}
-  Hero Banner Section - Shopify 2.0 Standards Compliant
-  Fully configurable through Theme Editor
+  Hero Banner Section - VERSIÓN PROFESIONAL
+  Con animaciones scroll reveal, parallax y efectos elegantes
 {% endcomment %}
 
 {%- liquid
-  assign section_height = section.settings.section_height
   assign bg_color_start = section.settings.background_color_start
   assign bg_color_end = section.settings.background_color_end
   assign text_color = section.settings.text_color
@@ -14,7 +13,6 @@
 <section 
   class="hero-section hero-section--{{ section.id }}"
   style="
-    --hero-height: {{ section_height }};
     --hero-bg-start: {{ bg_color_start }};
     --hero-bg-end: {{ bg_color_end }};
     --hero-text-color: {{ text_color }};
@@ -23,60 +21,117 @@
   role="banner"
   aria-label="{{ section.settings.title | escape }}"
 >
+  {%- comment -%} Imagen de fondo con parallax {%- endcomment -%}
   {% if section.settings.background_image != blank %}
     <div class="hero-section__background">
-      {{- section.settings.background_image | image_url: width: 2000 | image_tag:
-        loading: 'eager',
-        sizes: '100vw',
-        widths: '375, 750, 1100, 1500, 2000',
-        class: 'hero-section__image'
-      -}}
+      <div class="parallax-wrapper">
+        {{- section.settings.background_image | image_url: width: 2000 | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '800, 1200, 1600, 2000',
+          class: 'hero-section__image parallax-image',
+          alt: section.settings.background_image.alt | escape
+        -}}
+      </div>
       <div class="hero-section__overlay"></div>
     </div>
   {% endif %}
 
-  <div class="hero-content">
+  {%- comment -%} Patrón decorativo {%- endcomment -%}
+  <div class="hero-section__pattern" aria-hidden="true"></div>
+
+  {%- comment -%} Contenido principal {%- endcomment -%}
+  <div class="hero-content fade-in-up">
+    
+    {%- comment -%} Subtítulo pequeño opcional {%- endcomment -%}
+    {% if section.settings.small_subtitle != blank %}
+      <p class="hero-small-subtitle">
+        {{ section.settings.small_subtitle }}
+      </p>
+    {% endif %}
+    
+    {%- comment -%} Título principal {%- endcomment -%}
     {% if section.settings.title != blank %}
       <h1 class="hero-title">
         {{ section.settings.title }}
       </h1>
     {% endif %}
     
+    {%- comment -%} Subtítulo {%- endcomment -%}
     {% if section.settings.subtitle != blank %}
       <p class="hero-subtitle">
         {{ section.settings.subtitle }}
       </p>
     {% endif %}
     
+    {%- comment -%} Botones {%- endcomment -%}
     {% if section.settings.button_text != blank and section.settings.button_link != blank %}
-      <a href="{{ section.settings.button_link }}" class="hero-cta btn btn-primary">
-        {{ section.settings.button_text }}
-      </a>
+      <div class="hero-buttons">
+        <a href="{{ section.settings.button_link }}" class="hero-cta btn btn-primary">
+          {{ section.settings.button_text }}
+          <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        
+        {%- comment -%} Botón secundario opcional {%- endcomment -%}
+        {% if section.settings.button_text_2 != blank and section.settings.button_link_2 != blank %}
+          <a href="{{ section.settings.button_link_2 }}" class="hero-cta-secondary btn btn-secondary">
+            {{ section.settings.button_text_2 }}
+          </a>
+        {% endif %}
+      </div>
     {% endif %}
   </div>
+
+  {%- comment -%} Indicador de scroll - FUERA del hero-content {%- endcomment -%}
+  {% if section.settings.show_scroll_indicator %}
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <span class="scroll-text">Scroll</span>
+      <svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <polyline points="19 12 12 19 5 12"></polyline>
+      </svg>
+    </div>
+  {% endif %}
 </section>
 
 <style>
+  /* ========================================
+     HERO SECTION - PROFESIONAL
+     ======================================== */
+  
   .hero-section--{{ section.id }} {
     position: relative;
-    min-height: var(--hero-height);
+    height: 100vh; /* SIEMPRE pantalla completa */
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--hero-bg-start) 0%, var(--hero-bg-end) 100%);
     padding: var(--spacing-xl) var(--spacing-md);
+    padding-bottom: 220px;
     text-align: {{ section.settings.text_alignment }};
     color: var(--hero-text-color);
+    overflow: hidden;
   }
 
+  /* Imagen de fondo con parallax */
   {% if section.settings.background_image != blank %}
     .hero-section--{{ section.id }} .hero-section__background {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 120%; /* Extra para el efecto parallax */
       z-index: 0;
+    }
+
+    .hero-section--{{ section.id }} .parallax-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     .hero-section--{{ section.id }} .hero-section__image {
@@ -93,28 +148,193 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, var(--hero-overlay-opacity));
+      z-index: 1;
     }
   {% endif %}
 
+  /* Patrón decorativo sutil */
+  .hero-section--{{ section.id }} .hero-section__pattern {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 80%;
+    height: 150%;
+    background: radial-gradient(
+      circle at center,
+      rgba(201, 169, 97, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 1;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+      transform: translate(30px, -30px) rotate(2deg);
+    }
+    66% {
+      transform: translate(-20px, 20px) rotate(-2deg);
+    }
+  }
+
+  /* Contenido */
   .hero-section--{{ section.id }} .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     max-width: {{ section.settings.content_width }}px;
-    animation: fadeInUp 1s ease;
+    margin-bottom: 0;
   }
 
+  /* Subtítulo pequeño */
+  .hero-section--{{ section.id }} .hero-small-subtitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.9;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* Título */
   .hero-section--{{ section.id }} .hero-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.1;
     color: var(--hero-text-color);
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.02em;
   }
 
+  /* Subtítulo */
   .hero-section--{{ section.id }} .hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--hero-text-color);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.95;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Botones */
+  .hero-section--{{ section.id }} .hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: {{ section.settings.text_alignment }};
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+
+  .hero-section--{{ section.id }} .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.1rem 2.5rem;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hero-section--{{ section.id }} .btn-arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .hero-section--{{ section.id }} .hero-cta:hover .btn-arrow {
+    transform: translateX(5px);
+  }
+
+  .hero-section--{{ section.id }} .hero-cta-secondary {
+    background-color: transparent;
+    border: 2px solid currentColor;
+  }
+
+  /* Indicador de scroll */
+  .hero-section--{{ section.id }} .hero-scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.6;
+    animation: bounce 2s ease-in-out infinite;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+  }
+
+  .hero-section--{{ section.id }} .hero-scroll-indicator:hover {
+    opacity: 1;
+  }
+
+  .hero-section--{{ section.id }} .scroll-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
     color: var(--hero-text-color);
   }
 
+  .hero-section--{{ section.id }} .scroll-arrow {
+    color: var(--hero-text-color);
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(10px);
+    }
+  }
+
+  /* Responsive - TAMBIÉN pantalla completa en móvil */
   @media (max-width: 768px) {
     .hero-section--{{ section.id }} {
-      min-height: calc(var(--hero-height) * 0.8);
+      height: 100vh; /* PANTALLA COMPLETA también en móvil */
       padding: var(--spacing-lg) var(--spacing-sm);
+      padding-bottom: 300px;
+    }
+
+    .hero-section--{{ section.id }} .hero-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-section--{{ section.id }} .hero-cta,
+    .hero-section--{{ section.id }} .hero-cta-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-section--{{ section.id }} .hero-small-subtitle {
+      font-size: 0.8rem;
+    }
+
+    .hero-section--{{ section.id }} .hero-scroll-indicator {
+      bottom: 1.5rem;
+    }
+  }
+
+  /* Reducir movimiento para accesibilidad */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-section--{{ section.id }} .hero-section__pattern {
+      animation: none;
+    }
+
+    .hero-section--{{ section.id }} .hero-scroll-indicator {
+      animation: none;
     }
   }
 </style>
@@ -127,79 +347,75 @@
   "settings": [
     {
       "type": "header",
-      "content": "Content"
+      "content": "Contenido"
+    },
+    {
+      "type": "text",
+      "id": "small_subtitle",
+      "label": "Subtítulo pequeño",
+      "info": "Texto pequeño encima del título principal"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Heading",
-      "default": "Art Gallery"
+      "label": "Título principal",
+      "default": "Galería de Arte"
     },
     {
       "type": "textarea",
       "id": "subtitle",
-      "label": "Subheading",
-      "default": "Discover unique works that transform spaces"
+      "label": "Subtítulo",
+      "default": "Descubre obras únicas que transforman espacios"
     },
     {
       "type": "header",
-      "content": "Button"
+      "content": "Botón principal"
     },
     {
       "type": "text",
       "id": "button_text",
-      "label": "Button text",
-      "default": "Explore Collection"
+      "label": "Texto del botón",
+      "default": "Explorar Colección"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link"
+      "label": "Enlace del botón"
     },
     {
       "type": "header",
-      "content": "Layout"
+      "content": "Botón secundario (opcional)"
     },
     {
-      "type": "select",
-      "id": "section_height",
-      "label": "Section height",
-      "options": [
-        {
-          "value": "50vh",
-          "label": "Small"
-        },
-        {
-          "value": "70vh",
-          "label": "Medium"
-        },
-        {
-          "value": "90vh",
-          "label": "Large"
-        },
-        {
-          "value": "100vh",
-          "label": "Full screen"
-        }
-      ],
-      "default": "70vh"
+      "type": "text",
+      "id": "button_text_2",
+      "label": "Texto del botón secundario"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Enlace del botón secundario"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
     },
     {
       "type": "select",
       "id": "text_alignment",
-      "label": "Text alignment",
+      "label": "Alineación del texto",
       "options": [
         {
           "value": "left",
-          "label": "Left"
+          "label": "Izquierda"
         },
         {
           "value": "center",
-          "label": "Center"
+          "label": "Centro"
         },
         {
           "value": "right",
-          "label": "Right"
+          "label": "Derecha"
         }
       ],
       "default": "center"
@@ -211,17 +427,24 @@
       "max": 1200,
       "step": 50,
       "unit": "px",
-      "label": "Content width",
+      "label": "Ancho del contenido",
       "default": 800
     },
     {
+      "type": "checkbox",
+      "id": "show_scroll_indicator",
+      "label": "Mostrar indicador de scroll",
+      "default": true
+    },
+    {
       "type": "header",
-      "content": "Background"
+      "content": "Fondo"
     },
     {
       "type": "image_picker",
       "id": "background_image",
-      "label": "Background image"
+      "label": "Imagen de fondo",
+      "info": "Efecto parallax automático"
     },
     {
       "type": "range",
@@ -230,30 +453,30 @@
       "max": 100,
       "step": 5,
       "unit": "%",
-      "label": "Image overlay opacity",
+      "label": "Opacidad de la superposición",
       "default": 30,
-      "info": "Only applies when background image is set"
+      "info": "Solo se aplica con imagen de fondo"
     },
     {
       "type": "color",
       "id": "background_color_start",
-      "label": "Background gradient start",
+      "label": "Color de inicio del gradiente",
       "default": "#FAFAF8"
     },
     {
       "type": "color",
       "id": "background_color_end",
-      "label": "Background gradient end",
+      "label": "Color final del gradiente",
       "default": "#FFFFFF"
     },
     {
       "type": "header",
-      "content": "Colors"
+      "content": "Colores"
     },
     {
       "type": "color",
       "id": "text_color",
-      "label": "Text color",
+      "label": "Color del texto",
       "default": "#2C2C2C"
     }
   ],
@@ -261,9 +484,10 @@
     {
       "name": "Hero Banner",
       "settings": {
-        "title": "Art Gallery",
-        "subtitle": "Discover unique works that transform spaces",
-        "button_text": "Explore Collection",
+        "small_subtitle": "Bienvenido",
+        "title": "Galería de Arte",
+        "subtitle": "Descubre obras únicas que transforman espacios",
+        "button_text": "Explorar Colección",
         "button_link": "/collections/all"
       }
     }

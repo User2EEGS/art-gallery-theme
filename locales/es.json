@@ -1,0 +1,123 @@
+{
+  "404": {
+    "title": "404",
+    "not_found": "Página no encontrada.",
+    "back_to_shopping": "Volver a la tienda"
+  },
+  "blog": {
+    "article_comments": "Comentarios",
+    "article_metadata_html": "{{ date }} por {{ author }}",
+    "comment_form_body": "Comentario",
+    "comment_form_email": "Correo electrónico",
+    "comment_form_name": "Nombre",
+    "comment_form_submit": "Publicar",
+    "comment_form_title": "Agregar un comentario"
+  },
+  "cart": {
+    "checkout": "Finalizar compra",
+    "title": "Carrito",
+    "update": "Actualizar",
+    "remove": "Eliminar",
+    "item_count": {
+      "one": "{{ count }} artículo",
+      "other": "{{ count }} artículos"
+    }
+  },
+  "customers": {
+    "login": {
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "title": "Iniciar sesión"
+    }
+  },
+  "collections": {
+    "title": "Colecciones",
+    "view_all": "Ver toda la colección",
+    "no_products": "No se encontraron obras en esta colección",
+    "product_count": {
+      "one": "{{ count }} obra",
+      "other": "{{ count }} obras"
+    },
+    "filter_by": "Filtrar",
+    "all_products": "Todas las obras",
+    "sort_by": "Ordenar por",
+    "sorting": {
+      "manual": "Destacados",
+      "best-selling": "Más vendidos",
+      "title-ascending": "A-Z",
+      "title-descending": "Z-A",
+      "price-ascending": "Precio: Menor a Mayor",
+      "price-descending": "Precio: Mayor a Menor",
+      "created-ascending": "Más antiguos primero",
+      "created-descending": "Más recientes primero"
+    }
+  },
+  "products": {
+    "product": {
+      "on_sale": "Oferta",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "vendor": "Artista",
+      "add_to_cart": "Añadir al carrito",
+      "description": "Descripción",
+      "share": "Compartir",
+      "share_facebook": "Compartir en Facebook",
+      "share_twitter": "Compartir en Twitter",
+      "share_pinterest": "Compartir en Pinterest",
+      "quantity": "Cantidad",
+      "increase_quantity": "Aumentar cantidad",
+      "decrease_quantity": "Disminuir cantidad",
+      "view_image": "Ver imagen {{ index }}"
+    }
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Añadir a Apple Wallet",
+    "card": "Tarjeta regalo",
+    "expired": "Esta tarjeta regalo ha caducado",
+    "expires_on": "Caduca el {{ expires_on }}",
+    "use_at_checkout": "Usa esta tarjeta regalo al finalizar la compra"
+  },
+  "password": {
+    "title": "Esta tienda está protegida",
+    "password": "Contraseña",
+    "enter": "Entrar"
+  },
+  "search": {
+    "title": "Buscar",
+    "placeholder": "Buscar obras de arte...",
+    "submit": "Buscar",
+    "close": "Cerrar búsqueda",
+    "no_results_html": "No se encontraron resultados para {{ terms }}",
+    "results_for_html": "{{ count }} resultados encontrados para {{ terms }}"
+  },
+  "general": {
+    "navigation": {
+      "home": "Inicio",
+      "gallery": "Galería",
+      "about": "Sobre el artista",
+      "contact": "Contacto",
+      "open_menu": "Abrir menú",
+      "close_menu": "Cerrar menú"
+    },
+    "scroll_indicator": "Desliza",
+    "accessibility": {
+      "skip_to_content": "Saltar al contenido"
+    },
+    "breadcrumbs": {
+      "home": "Inicio"
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+  "newsletter": {
+    "email_placeholder": "Ingresa tu correo electrónico",
+    "submit": "Suscribirse",
+    "success": "¡Gracias por suscribirte!"
+  },
+  "footer": {
+    "all_rights_reserved": "Todos los derechos reservados."
+  }
+}

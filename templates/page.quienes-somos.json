@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "about_hero": {
+      "type": "about-hero",
+      "settings": {
+        "small_label": "Bienvenido",
+        "heading": "Quiénes Somos",
+        "subheading": "<p>Descubre la pasión por el arte que nos define y la historia detrás de cada obra.</p>",
+        "text_alignment": "center",
+        "content_width": 900,
+        "min_height": 60,
+        "show_pattern": true
+      }
+    },
+    "about_content_1": {
+      "type": "about-content",
+      "settings": {
+        "heading": "Nuestra Historia",
+        "content": "<p>Desde hace más de tres décadas, nuestra galería ha sido un refugio para los amantes del arte. Cada cuadro cuenta una historia, cada pincelada refleja la pasión de su creador.</p><p>Especializ ados en arte clásico y contemporáneo, trabajamos directamente con artistas para ofrecer obras únicas que transformen espacios y toquen corazones.</p>",
+        "layout": "left",
+        "image_border_radius": 4,
+        "background_color": "#FFFFFF",
+        "padding_top": 80,
+        "padding_bottom": 40
+      }
+    },
+    "about_content_2": {
+      "type": "about-content",
+      "settings": {
+        "heading": "Nuestra Filosofía",
+        "content": "<p>Creemos que el arte no es solo decoración, es una experiencia. Por eso, cada obra que seleccionamos pasa por un riguroso proceso de curaduría.</p><p>Nuestro compromiso es conectar a coleccionistas con piezas que no solo embellezcan sus espacios, sino que también enriquezcan sus vidas.</p>",
+        "layout": "right",
+        "image_border_radius": 4,
+        "background_color": "#FFFFFF",
+        "padding_top": 40,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "about_hero",
+    "about_content_1",
+    "about_content_2"
+  ]
+}

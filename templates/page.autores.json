@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "authors_hero": {
+      "type": "about-hero",
+      "settings": {
+        "small_label": "Descubre",
+        "heading": "Nuestros Artistas",
+        "subheading": "<p>Conoce a los talentosos creadores que dan vida a cada obra de nuestra colección.</p>",
+        "text_alignment": "center",
+        "content_width": 900,
+        "min_height": 50,
+        "show_pattern": true
+      }
+    },
+    "authors_grid": {
+      "type": "authors-grid",
+      "blocks": {
+        "author_1": {
+          "type": "author",
+          "settings": {
+            "name": "Carmelo Cañón",
+            "specialty": "Óleo y Acuarela",
+            "bio": "<p>Artista valenciano con más de 30 años de experiencia. Especializado en paisajes mediterráneos y marinas que capturan la esencia del Levante español.</p>"
+          }
+        },
+        "author_2": {
+          "type": "author",
+          "settings": {
+            "name": "Artista Invitado",
+            "specialty": "Técnica Mixta",
+            "bio": "<p>Artista contemporáneo cuya obra explora la intersección entre tradición y modernidad a través de técnicas innovadoras.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "author_1",
+        "author_2"
+      ],
+      "settings": {
+        "heading": "",
+        "subheading": "",
+        "columns": "3",
+        "background_color": "#FFFFFF",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "authors_hero",
+    "authors_grid"
+  ]
+}
