@@ -1,7 +1,7 @@
 {% comment %}
   About Content Section - Imagen + Texto configurable
   Layout reversible, completamente editable
-  VERSION PROFESIONAL - image_tag moderno con responsive images
+  VERSION FINAL corregida - SIN DEBUG
 {% endcomment %}
 
 {%- liquid
@@ -19,16 +19,22 @@
   <div class="about-content__container">
     <div class="about-content__grid about-content__grid--{{ layout }}">
       
-      {%- comment -%} Imagen - image_tag moderno {%- endcomment -%}
+      {%- comment -%} Imagen {%- endcomment -%}
       <div class="about-content__image-wrapper fade-in-{{ layout }}">
         {%- if section_image != blank -%}
-          {{ section_image | image_url: width: 1000 | image_tag:
-            loading: 'lazy',
-            widths: '400, 600, 800, 1000',
-            sizes: '(min-width: 768px) 50vw, 100vw',
-            class: 'about-content__image',
-            alt: section_image.alt
-          }}
+          <img
+            src="{{ section_image | image_url: width: 1000 }}"
+            srcset="{{ section_image | image_url: width: 400 }} 400w,
+                    {{ section_image | image_url: width: 600 }} 600w,
+                    {{ section_image | image_url: width: 800 }} 800w,
+                    {{ section_image | image_url: width: 1000 }} 1000w"
+            sizes="(min-width: 768px) 50vw, 100vw"
+            alt="{{ section_image.alt | escape }}"
+            class="about-content__image"
+            loading="lazy"
+            width="1000"
+            height="1250"
+          >
         {%- else -%}
           <div class="about-content__placeholder">
             {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -98,9 +104,11 @@
     }
   }
 
-  /* Imagen */
+  /* Imagen - VERSIÓN FINAL CORREGIDA */
   .about-content--{{ section.id }} .about-content__image-wrapper {
     position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     border-radius: {{ section.settings.image_border_radius }}px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
@@ -108,7 +116,9 @@
 
   .about-content--{{ section.id }} .about-content__image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     display: block;
     transition: transform 0.6s ease;
   }
@@ -118,11 +128,12 @@
   }
 
   .about-content--{{ section.id }} .about-content__placeholder {
-    aspect-ratio: 4/3;
-    background-color: var(--color-light-gray);
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #f0f0f0;
   }
 
   .about-content--{{ section.id }} .placeholder-svg {
@@ -164,6 +175,10 @@
   @media (max-width: 767px) {
     .about-content--{{ section.id }} {
       padding: {{ section.settings.padding_top | divided_by: 1.5 }}px 0 {{ section.settings.padding_bottom | divided_by: 1.5 }}px;
+    }
+    
+    .about-content--{{ section.id }} .about-content__image-wrapper {
+      aspect-ratio: 3 / 4;
     }
   }
 </style>

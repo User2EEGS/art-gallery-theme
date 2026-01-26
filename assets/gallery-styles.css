@@ -2300,3 +2300,16 @@ section[class*="contact"],
 @supports (aspect-ratio: 4 / 5) {
   /* Solo usa aspect-ratio si el navegador lo soporta */
 }
+
+/* ========================================
+   FIX: Lazy Loading Opacity
+   ======================================== */
+
+img[loading="lazy"] {
+  opacity: 1 !important;
+}
+
+.image-with-text__image,
+.about-content__image {
+  opacity: 1 !important;
+}
