@@ -1,53 +1,174 @@
 {% comment %}
-  Header con Dropdown Premium Shopify Style
+  Header — versión final consolidada
+  v5 - position controlado por setting sticky
 {% endcomment %}
 
-<header class="site-header" role="banner">
-  <div class="site-header__inner">
-    
-    {%- comment -%} Logo {%- endcomment -%}
-    <div class="site-header__logo">
-      <a href="{{ routes.root_url }}" class="site-logo">
-        {% if section.settings.logo != blank %}
-          <img 
-            src="{{ section.settings.logo | image_url: width: 200 }}" 
-            alt="{{ shop.name }}"
-            width="200"
-            height="auto"
-            loading="eager"
-          >
-        {% else %}
-          {{ section.settings.logo_text | default: shop.name }}
-        {% endif %}
-      </a>
+{%- liquid
+  assign menu_type  = section.settings.menu_type_desktop
+  assign sticky     = section.settings.sticky_header_type
+
+  if sticky != 'none'
+    assign header_tag        = 'sticky-header'
+    assign header_pos_class  = 'site-header--fixed'
+  else
+    assign header_tag        = 'div'
+    assign header_pos_class  = 'site-header--static'
+  endif
+-%}
+
+{%- style -%}
+  .site-header {
+    padding-top:    {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .site-header {
+      padding-top:    {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .site-header-wrapper {
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  {%- if sticky == 'reduce-logo-size' -%}
+    .scrolled-past-header .site-header__logo img {
+      width: 75%;
+      transition: width 0.3s ease;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<{{ header_tag }}
+  {% if header_tag == 'sticky-header' %}data-sticky-type="{{ sticky }}"{% endif %}
+  class="site-header-wrapper"
+>
+  <header
+    class="site-header {{ header_pos_class }} site-header--logo-{{ section.settings.logo_position }} site-header--mobile-logo-{{ section.settings.mobile_logo_position }} site-header--menu-{{ menu_type }}"
+    role="banner"
+  >
+    <div class="site-header__inner">
+
+      <div class="site-header__logo">
+        <a href="{{ routes.root_url }}" class="site-logo">
+          {%- if section.settings.logo != blank -%}
+            <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="200" height="auto" loading="eager">
+          {%- else -%}
+            {{ section.settings.logo_text | default: shop.name }}
+          {%- endif -%}
+        </a>
+      </div>
+
+      {%- if menu_type == 'drawer' -%}
+        <button class="drawer-menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer-menu" data-drawer-toggle>
+          <span class="drawer-menu-icon"></span>
+          <span class="drawer-menu-icon"></span>
+          <span class="drawer-menu-icon"></span>
+        </button>
+
+      {%- elsif menu_type == 'mega' -%}
+        <nav class="site-nav site-nav--mega" role="navigation" aria-label="Menú principal">
+          <ul class="site-nav__list">
+            {%- for link in linklists[section.settings.menu].links -%}
+              <li class="site-nav__item {% if link.links != blank %}has-mega{% endif %}">
+                <a href="{{ link.url }}" class="site-nav__link {% if link.active %}active{% endif %}"
+                  {% if link.links != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                  {{ link.title }}
+                  {%- if link.links != blank -%}
+                    <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  {%- endif -%}
+                </a>
+                {%- if link.links != blank -%}
+                  <div class="mega-menu" role="region">
+                    <div class="mega-menu__inner">
+                      <ul class="mega-menu__columns">
+                        {%- for child_link in link.links -%}
+                          <li class="mega-menu__item">
+                            <a href="{{ child_link.url }}" class="mega-menu__link {% if child_link.active %}active{% endif %}">{{ child_link.title }}</a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </div>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+
+      {%- else -%}
+        <nav class="site-nav site-nav--dropdown" role="navigation" aria-label="Menú principal">
+          <ul class="site-nav__list">
+            {%- for link in linklists[section.settings.menu].links -%}
+              <li class="site-nav__item {% if link.links != blank %}has-dropdown{% endif %}">
+                <a href="{{ link.url }}" class="site-nav__link {% if link.active %}active{% endif %}"
+                  {% if link.links != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                  {{ link.title }}
+                  {%- if link.links != blank -%}
+                    <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  {%- endif -%}
+                </a>
+                {%- if link.links != blank -%}
+                  <ul class="site-nav__dropdown">
+                    {%- for child_link in link.links -%}
+                      <li class="site-nav__dropdown-item">
+                        <a href="{{ child_link.url }}" class="site-nav__dropdown-link {% if child_link.active %}active{% endif %}">{{ child_link.title }}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      <div class="site-header__search">
+        <button class="search-toggle" aria-label="Buscar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+        </button>
+      </div>
+
+      <div class="site-header__cart">
+        <a href="{{ routes.cart_url }}" class="cart-link">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span class="cart-count" data-cart-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+        </a>
+      </div>
+
+      <button class="mobile-menu-toggle" aria-label="Abrir menú">
+        <span class="mobile-menu-icon"></span>
+        <span class="mobile-menu-icon"></span>
+        <span class="mobile-menu-icon"></span>
+      </button>
+
     </div>
+  </header>
+</{{ header_tag }}>
 
-    {%- comment -%} Navegación principal con submenús {%- endcomment -%}
-    <nav class="site-nav" role="navigation">
-      <ul class="site-nav__list">
+<div class="dropdown-overlay" data-overlay></div>
+
+{%- if menu_type == 'drawer' -%}
+<div class="drawer-menu" id="drawer-menu" aria-hidden="true">
+  <div class="drawer-menu__inner">
+    <button class="drawer-menu__close" aria-label="Cerrar menú" data-drawer-close>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <nav class="drawer-nav" aria-label="Menú lateral">
+      <ul class="drawer-nav__list">
         {%- for link in linklists[section.settings.menu].links -%}
-          <li class="site-nav__item {% if link.links != blank %}has-dropdown{% endif %}">
-            <a 
-              href="{{ link.url }}" 
-              class="site-nav__link {% if link.active %}active{% endif %}"
-              {% if link.links != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}
-            >
-              {{ link.title }}
+          <li class="drawer-nav__item {% if link.links != blank %}has-submenu{% endif %}">
+            <div class="drawer-nav__row">
+              <a href="{{ link.url }}" class="drawer-nav__link {% if link.active %}active{% endif %}">{{ link.title }}</a>
               {%- if link.links != blank -%}
-                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <button class="drawer-submenu-toggle" aria-label="Expandir {{ link.title }}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
               {%- endif -%}
-            </a>
-
+            </div>
             {%- if link.links != blank -%}
-              <ul class="site-nav__dropdown">
+              <ul class="drawer-nav__submenu">
                 {%- for child_link in link.links -%}
-                  <li class="site-nav__dropdown-item">
-                    <a href="{{ child_link.url }}" class="site-nav__dropdown-link {% if child_link.active %}active{% endif %}">
-                      {{ child_link.title }}
-                    </a>
-                  </li>
+                  <li><a href="{{ child_link.url }}" class="drawer-nav__submenu-link {% if child_link.active %}active{% endif %}">{{ child_link.title }}</a></li>
                 {%- endfor -%}
               </ul>
             {%- endif -%}
@@ -55,72 +176,27 @@
         {%- endfor -%}
       </ul>
     </nav>
-
-    {%- comment -%} Buscador {%- endcomment -%}
-    <div class="site-header__search">
-      <button class="search-toggle" aria-label="Buscar">
-        <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
-        </svg>
-      </button>
-    </div>
-
-    {%- comment -%} Carrito {%- endcomment -%}
-    <div class="site-header__cart">
-      <a href="{{ routes.cart_url }}" class="cart-link">
-        <svg class="cart-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <span class="cart-count" data-cart-count="{{ cart.item_count }}">
-          {{ cart.item_count }}
-        </span>
-      </a>
-    </div>
-
-    {%- comment -%} Botón menú móvil {%- endcomment -%}
-    <button class="mobile-menu-toggle" aria-label="Abrir menú">
-      <span class="mobile-menu-icon"></span>
-      <span class="mobile-menu-icon"></span>
-      <span class="mobile-menu-icon"></span>
-    </button>
-
   </div>
-</header>
+</div>
+{%- endif -%}
 
-{%- comment -%} Overlay con blur (efecto premium) {%- endcomment -%}
-<div class="dropdown-overlay"></div>
-
-{%- comment -%} Menú móvil {%- endcomment -%}
 <div class="mobile-menu">
   <div class="mobile-menu__inner">
     <button class="mobile-menu-close" aria-label="Cerrar menú">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </button>
     <nav class="mobile-nav">
       <ul class="mobile-nav__list">
         {%- for link in linklists[section.settings.menu].links -%}
           <li class="mobile-nav__item {% if link.links != blank %}has-submenu{% endif %}">
             <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
-            
             {%- if link.links != blank -%}
               <button class="mobile-submenu-toggle" aria-label="Expandir {{ link.title }}">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
               <ul class="mobile-nav__submenu">
                 {%- for child_link in link.links -%}
-                  <li class="mobile-nav__submenu-item">
-                    <a href="{{ child_link.url }}" class="mobile-nav__submenu-link">
-                      {{ child_link.title }}
-                    </a>
-                  </li>
+                  <li class="mobile-nav__submenu-item"><a href="{{ child_link.url }}" class="mobile-nav__submenu-link">{{ child_link.title }}</a></li>
                 {%- endfor -%}
               </ul>
             {%- endif -%}
@@ -131,67 +207,63 @@
   </div>
 </div>
 
-{%- comment -%} Búsqueda desplegable {%- endcomment -%}
 <div class="search-dropdown">
   <div class="search-dropdown__inner">
     <form action="{{ routes.search_url }}" method="get" class="search-form">
-      <input 
-        type="search" 
-        name="q" 
-        placeholder="Buscar en la galería..."
-        class="search-input"
-        autocomplete="off"
-      >
+      <input type="search" name="q" placeholder="Buscar en la galería..." class="search-input" autocomplete="off">
       <button type="submit" class="search-submit" aria-label="Enviar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
-        </svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
       </button>
     </form>
     <button class="search-close" aria-label="Cerrar">×</button>
   </div>
 </div>
 
-{%- comment -%} JavaScript para submenús móviles {%- endcomment -%}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const submenuToggles = document.querySelectorAll('.mobile-submenu-toggle');
-    
-    submenuToggles.forEach(toggle => {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const parentItem = this.closest('.mobile-nav__item');
-        parentItem.classList.toggle('open');
-      });
-    });
-  });
-</script>
-
 {% schema %}
 {
   "name": "Header",
   "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Imagen del logo" },
+    { "type": "text", "id": "logo_text", "label": "Texto del logo (si no hay imagen)", "default": "Studio by Carmelo Cañón" },
     {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Imagen del logo"
+      "type": "select", "id": "logo_position", "label": "Posición del logo",
+      "options": [
+        { "value": "middle-left",   "label": "Izquierda" },
+        { "value": "middle-center", "label": "Centro" }
+      ],
+      "default": "middle-left"
     },
     {
-      "type": "text",
-      "id": "logo_text",
-      "label": "Texto del logo (si no hay imagen)",
-      "default": "Studio by Carmelo Cañón"
+      "type": "select", "id": "mobile_logo_position", "label": "Posición del logo en móvil",
+      "options": [
+        { "value": "center", "label": "Centro" },
+        { "value": "left",   "label": "Izquierda" }
+      ],
+      "default": "center"
+    },
+    { "type": "link_list", "id": "menu", "label": "Menú de navegación", "default": "main-menu" },
+    {
+      "type": "select", "id": "menu_type_desktop", "label": "Tipo de menú",
+      "options": [
+        { "value": "dropdown", "label": "Desplegable" },
+        { "value": "mega",     "label": "Mega menú" },
+        { "value": "drawer",   "label": "Panel lateral" }
+      ],
+      "default": "dropdown"
     },
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Menú de navegación",
-      "default": "main-menu",
-      "info": "Edita el menú en: Tienda en línea → Navegación"
-    }
+      "type": "select", "id": "sticky_header_type", "label": "Encabezado fijo",
+      "options": [
+        { "value": "none",         "label": "No (se desplaza con la página)" },
+        { "value": "on-scroll-up", "label": "Se esconde al bajar, aparece al subir" },
+        { "value": "always",       "label": "Siempre visible" }
+      ],
+      "default": "on-scroll-up"
+    },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "margin_bottom", "label": "Margen inferior", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_top",    "label": "Relleno superior", "min": 0, "max": 36,  "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "padding_bottom", "label": "Relleno inferior", "min": 0, "max": 36,  "step": 4, "unit": "px", "default": 20 }
   ]
 }
 {% endschema %}
